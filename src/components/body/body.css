@@ -7,10 +7,10 @@
     justify-content: flex-start;
     flex-direction: column;
     padding-top: 60px;
-    height: 100vh;
+    height: auto;
 }
 
-#main-body .word-container {
+/* #main-body .word-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +63,7 @@
     border-radius: 5px;
     border: 1px solid #FFF;
     margin: 22px;
-}
+} */
 
 .w100 {
     width: 100%;

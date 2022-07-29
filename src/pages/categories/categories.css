@@ -1,44 +1,14 @@
-#main-body .main-body-container{
-  background: #192d40;
-  border: 5px solid #4d5866;
-  border-top: 0;
-  display: flex;
-  margin-bottom: 63px;
-  justify-content: flex-start;
-  flex-direction: column;
-  padding-top: 60px;
-  height: auto;
-}
-
-#main-body .categories-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
-}
-
-#main-body  .title-container {
-  text-align: center;
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
-  text-decoration: underline;
-  margin-bottom: 30px;
-
-}
-
-#main-body .button {
+#categories-container .button {
   border: 1px solid;
 }
 
-.button-box-container {
+#categories-container .button-box-container {
 width: 100%;
   margin-top: 30px;
   border-top: 2px solid #bdb840;
 }
 
-#main-body .button-box.submit {
+#categories-container .button-box.submit {
   margin-bottom: 30px;
   width: 100%;
 }
