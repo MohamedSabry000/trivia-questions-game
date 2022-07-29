@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, Box, Button } from "@mui/material";
-import { getCategories, getQuestions } from "../../api";
+import { Grid, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Body from "../../components/body/Body";
 import SectionTitle from "../../components/section-title/SectionTitle";
@@ -8,7 +7,6 @@ import SectionTitle from "../../components/section-title/SectionTitle";
 import "./questions.css";
 import {
   setNextQuestion,
-  setQuestions,
   setTimeSpent,
   setCorrectAnswer,
   setIncorrectAnswer,
@@ -21,17 +19,15 @@ import { setPage } from "../../redux/reducers/page";
 export default function Questions() {
   const [answers, setAnswers] = useState([]);
   const [progress, setProgress] = useState(10);
-  const [countDown, setCountDown] = useState(0);
   const [answer, setAnswer] = useState(null);
+  // local save time spent of the question
   const [time, setTime] = useState(0);
   const [showError, setShowError] = useState(false);
   //  rerender the timer
   const [renderTimer, setRenderTimer] = useState(true);
 
   const dispatch = useDispatch();
-  const { level, selectedQuestion, questionIndex, questions } = useSelector(
-    (state) => state.game
-  );
+  const { selectedQuestion, questionIndex, questions } = useSelector((state) => state.game );
 
   // Handle Progress Bar
   useEffect(() => {

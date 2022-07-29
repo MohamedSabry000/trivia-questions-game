@@ -21,6 +21,7 @@ export default function Categories() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Get Categories from API
     getCategories().then((res) => {
       console.log(res.data);
       dispatch(setCategories(res.data?.trivia_categories));
@@ -33,6 +34,7 @@ export default function Categories() {
     if (category === "") {
       setShowError(true);
     } else {
+      // After Choose Category, get its Questions from API
       dispatch(setSelectedCategory(category));
       getQuestions({
         amount: 10,
@@ -45,12 +47,11 @@ export default function Categories() {
     }
   };
 
+  // Handle Random Category Choice, but not finished ones
   const handleRandom = (e) => {
     e.preventDefault();
     const random = Math.floor(Math.random() * categories.length);
     if (finishedCategories.includes(categories[random].id)) {
-      console.log(categories[random].id);
-      console.log("========================");
       handleRandom(e);
     } else {
       setCategory(categories[random].id);
