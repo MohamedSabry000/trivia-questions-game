@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Box, Button } from "@mui/material";
 import { getCategories } from "../../api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { setSelectedCategory } from "../../redux/reducers/game";
 import { setPage } from "../../redux/reducers/page";
@@ -15,6 +15,8 @@ export default function Categories() {
   const [category, setCategory] = useState("");
 
   const [showError, setShowError] = useState(false);
+  // get Finished Categories, so if selected category is finished, it will force to choose another category
+  const { finishedCategories } = useSelector((state) => state.game);
 
   const dispatch = useDispatch();
 
@@ -36,23 +38,40 @@ export default function Categories() {
     }
   };
 
+  const handleRandom = (e) => {
+    e.preventDefault();
+    const random = Math.floor(Math.random() * categories.length);
+    if (finishedCategories.includes(categories[random].id)) {
+      console.log(categories[random].id);
+      console.log("========================");
+      handleRandom(e);
+    } else {
+      setCategory(categories[random].id);
+    }
+  };
+
   return (
     <Body>
       <section id="categories-container">
         <SectionTitle>Choose your Category</SectionTitle>
         <Grid container spacing={3}>
-          {categories.map((category, index) => (
+          {categories.map((cat, index) => (
             <Grid
               item
               xs={12}
               sm={6}
               md={4}
               key={index}
-              onClick={() => setCategory(category.id)}
+              className={finishedCategories.includes(cat.id) ? "disabled" : ""}
+              readOnly={finishedCategories.includes(cat.id)}
             >
-              <Box className="button-box">
-                <Button className="button w100">
-                  <span className="button-text">{category.name}</span>
+              <Box className="button-box" onClick={() => setCategory(cat.id)}>
+                <Button
+                  className={`button w100 ${
+                    cat.id === category ? "selected" : ""
+                  }`}
+                >
+                  <span className="button-text">{cat.name}</span>
                 </Button>
               </Box>
             </Grid>
@@ -66,9 +85,18 @@ export default function Categories() {
                   {showError ? "Please fill all fields" : ""}
                 </span>
               </Box>
+            </Grid>
+            <Grid item xs={12} md={6} className="button-box-container">
               <Box className="button-box submit w100">
                 <Button className="button w100" onClick={handleSubmit}>
-                  <span className="button-text">Play</span>
+                  <span className="button-text">Start Gaming</span>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6} className="button-box-container">
+              <Box className="button-box submit w100">
+                <Button className="button w100" onClick={handleRandom}>
+                  <span className="button-text">Random</span>
                 </Button>
               </Box>
             </Grid>

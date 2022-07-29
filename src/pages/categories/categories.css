@@ -18,3 +18,12 @@ width: 100%;
   color: white;
   margin: 10px;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+.disabled button{
+  background: #bdb840;
+  color: white;
+}

@@ -76,3 +76,7 @@
     display: block !important;
     color: red;
 }
+.selected {
+   background: #25e2d9 !important;
+   color: rgb(93, 27, 27) !important;
+}

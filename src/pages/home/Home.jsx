@@ -18,6 +18,7 @@ export default function Home() {
 
   const handleLevelChange = (level) => {
     setLevelLocal(level.toLowerCase());
+
   };
 
   const handleSubmit = (e) => {
@@ -26,7 +27,7 @@ export default function Home() {
       setShowError(true);
     } else {
       dispatch(setUserName(user));
-      dispatch(setLevel(user));
+      dispatch(setLevel(levelLocal));
       dispatch(setPage("categories"));
     }
   };
@@ -49,11 +50,11 @@ export default function Home() {
           <div className="buttons-container">
             <Grid container spacing={3}>
               {buttons.current.map((button, index) => (
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={4} key={index}>
                   <Box className="button-box">
                     <Button
-                      className="button w100"
                       onClick={() => handleLevelChange(button)}
+                      className={`button w100 ${button.toLowerCase() === levelLocal ? "selected" : ""}`}
                     >
                       <span className="button-text">{button}</span>
                     </Button>
