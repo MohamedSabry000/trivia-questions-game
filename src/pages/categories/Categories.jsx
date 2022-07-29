@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Box, Button } from "@mui/material";
-import { getCategories } from "../../api";
+import { getCategories, getQuestions } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSelectedCategory } from "../../redux/reducers/game";
+import { setQuestions, setSelectedCategory } from "../../redux/reducers/game";
 import { setPage } from "../../redux/reducers/page";
 
 import "./categories.css";
@@ -16,7 +16,7 @@ export default function Categories() {
 
   const [showError, setShowError] = useState(false);
   // get Finished Categories, so if selected category is finished, it will force to choose another category
-  const { finishedCategories } = useSelector((state) => state.game);
+  const { finishedCategories, level } = useSelector((state) => state.game);
 
   const dispatch = useDispatch();
 
@@ -34,6 +34,13 @@ export default function Categories() {
       setShowError(true);
     } else {
       dispatch(setSelectedCategory(category));
+      getQuestions({
+        amount: 10,
+        category: category,
+        difficulty: level,
+      }).then((res) => {
+        dispatch(setQuestions(res.data?.results));
+      });
       dispatch(setPage("questions"));
     }
   };

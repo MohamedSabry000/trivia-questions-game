@@ -1,28 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  userName: '',
+  level: '',
+  categories: [],
+  finishedCategories: [9,10,11,12,13,14,15,16,17,18],
+  selectedCategory: null,
+  questions: [],
+  selectedQuestion: null,
+  questionIndex: 0,
+  answers: {
+    correct: 0,
+    incorrect: 0,
+    skipped: 0,
+  },
+  timeSpent: 0,
+  isFinished: false,
+}
+
 export const gameSlice = createSlice({
   name: 'game',
-  initialState: {
-    userName: '',
-    level: '',
-    categories: [],
-    finishedCategories: [],
-    selectedCategory: [],
-    questions: [],
-    selectedQuestion: null,
-    questionIndex: 0,
-  },
+  initialState: initialState,
   reducers: {
     resetGame: (state) => {
-      state.userName= '';
-      state.level= '';
-
-      state.categories= [];
-      state.finishedCategories= [9,10,11,12,13,14,15,16,17,18];
-      state.selectedCategory= null;
-
-      state.questions= [];
-      state.selectedQuestion= null;
+      Object.keys(initialState).forEach(key => {
+        state[key] = initialState[key];
+      });
     },
     setUserName: (state, action) =>         { state.user = action.payload; },
     setLevel: (state, action) =>            { state.level = action.payload; },
@@ -32,12 +35,26 @@ export const gameSlice = createSlice({
 
     setQuestions: (state, action) =>        {
       state.questions = action.payload;
+      state.questionIndex = 0;
       state.selectedQuestion = !!action.payload[state.questionIndex] && action.payload[state.questionIndex];
     },
     setNextQuestion: (state, action) =>     { state.selectedQuestion = state.questions[++state.questionIndex]; },
+
+    // Answers
+    setCorrectAnswer: (state, action) =>    { state.answers.correct++; },
+    setIncorrectAnswer: (state, action) =>  { state.answers.incorrect++; },
+    setSkippedAnswer: (state, action) =>    { state.answers.skipped++; },
+    // Time Spent of all questions
+    setTimeSpent: (state, action) =>        { state.timeSpent += action.payload; },
   }
 });
 
-export const { resetGame, setUserName, setLevel, setCategories, setSelectedCategory, setNextQuestion, setQuestions, setSelectedQuestion, setFinishedCategories } = gameSlice.actions;
+export const {
+  resetGame, setUserName, setLevel,
+  setCategories, setSelectedCategory,
+  setNextQuestion, setQuestions,
+  setSelectedQuestion, setFinishedCategories,
+  setCorrectAnswer, setIncorrectAnswer, setSkippedAnswer,
+  setTimeSpent } = gameSlice.actions;
 
 export default gameSlice.reducer;
