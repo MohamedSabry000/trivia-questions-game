@@ -5,11 +5,19 @@ import { setNextQuestion, setSkippedAnswer, setTimeSpent } from '../../redux/red
 import { setPage } from '../../redux/reducers/page';
 
 import './timer.css'
-export default function Timer({duration, setTime}) {
+export default function Timer({render, setRender, setTime}) {
   const [t, setT] = useState(0);
+  const [temp, setTemp] = useState(false);
 
   const dispatch = useDispatch();
-  const { questionIndex, questions } = useSelector((state) => state.game);
+  const { questionIndex, questions, level } = useSelector((state) => state.game);
+
+  // Handle Duration of Each Question
+  const countDown = level === "easy" ? 90 : level === "medium" ? 60 : 30;
+
+  useEffect(() => {
+    setRender(true);
+  }, [render]);
 
   useEffect(() => {
     setTime(t)
@@ -27,15 +35,17 @@ export default function Timer({duration, setTime}) {
   }
 
   return (
-    <CountdownCircleTimer
+    render && <CountdownCircleTimer
+      render={render}
       isPlaying={true}
-      duration={duration}
+      duration={countDown}
       colors={['#d3d2d4', '#F7B801', '#A30000', '#59b192']}
       colorsTime={[90, 30, 15, 0]}
-      onUpdate={(counter) => setT(duration-counter)}
+      onUpdate={(counter) => setT(countDown-counter)}
       onComplete={handleComplete}
     >
       {({ remainingTime }) => remainingTime }
     </CountdownCircleTimer>
+
   )
 }

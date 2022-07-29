@@ -25,16 +25,13 @@ export default function Questions() {
   const [answer, setAnswer] = useState(null);
   const [time, setTime] = useState(0);
   const [showError, setShowError] = useState(false);
+  //  rerender the timer
+  const [renderTimer, setRenderTimer] = useState(true);
 
   const dispatch = useDispatch();
   const { level, selectedQuestion, questionIndex, questions } = useSelector(
     (state) => state.game
   );
-
-  useEffect(() => {
-    // Handle Duration of Each Question
-    setCountDown(level === "easy" ? 90 : level === "medium" ? 60 : 30);
-  }, []);
 
   // Handle Progress Bar
   useEffect(() => {
@@ -76,6 +73,8 @@ export default function Questions() {
 
       // Handle Next Question
       dispatch(setNextQuestion());
+      setRenderTimer(prev => !prev);
+
     } else if (answer === null) {
       setShowError(true);
     } else {
@@ -94,6 +93,7 @@ export default function Questions() {
       dispatch(setSkippedAnswer());
       dispatch(setPage("score"));
     }
+    setRenderTimer(prev => !prev);
   };
 
   return (
@@ -102,7 +102,7 @@ export default function Questions() {
 
       <Body>
         <section className="questions-container" id="questions">
-          <Timer duration={countDown} setTime={setTime} />
+          <Timer render={renderTimer} setRender={setRenderTimer} setTime={setTime} />
           <SectionTitle>Questions</SectionTitle>
           <div className="buttons-container w100">
             <Box className="question-container">
