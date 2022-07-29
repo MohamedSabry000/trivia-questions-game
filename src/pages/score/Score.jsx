@@ -19,7 +19,7 @@ export default function Score() {
     datasets: [
       {
         label: "# of Answers",
-        data: [answers.correct, answers.wrong, answers.skipped],
+        data: [answers.correct, answers.incorrect, answers.skipped],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -90,7 +90,7 @@ export default function Score() {
               </Button>
             </Box>
           </Grid>}
-          {/* Handle The Width in case  */}
+          {/* Handle The Width in case there is at lease one incorrect or skipped question */}
           <Grid item xs={12} md={!answers.incorrect && !answers.skipped? 6 : 12} className="button-box-container">
             <Box className="button-box submit w100">
               <Button className="button w100" onClick={handleNewGame}>

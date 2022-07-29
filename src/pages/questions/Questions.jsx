@@ -91,6 +91,7 @@ export default function Questions() {
       dispatch(setSkippedAnswer());
       dispatch(setNextQuestion());
     } else {
+      dispatch(setSkippedAnswer());
       dispatch(setPage("score"));
     }
   };
