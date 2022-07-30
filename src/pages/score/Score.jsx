@@ -42,7 +42,7 @@ export default function Score() {
   };
 
   const dispatch = useDispatch();
-  const { timeSpent, selectedCategory } = useSelector((state) => state.game);
+  const { timeSpent, selectedCategory, user } = useSelector((state) => state.game);
 
   const getTime = (time) => {
     const hours = Math.floor(time / 3600);
@@ -62,7 +62,7 @@ export default function Score() {
   return (
     <Body>
       <section className="questions-container" id="score">
-        <SectionTitle>Score</SectionTitle>
+        <SectionTitle>Score of ( {user} ) </SectionTitle>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Box className="question-box">

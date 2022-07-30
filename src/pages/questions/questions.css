@@ -29,3 +29,19 @@
   color: white;
   margin: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  #main-body .word-container .word-wrapper{
+    width: 100% !important;
+  }
+  .buttons-container{
+    width: 100% !important;
+  }
+  .button-box{
+    margin: 22px auto !important;
+    margin-bottom: 0px !important;
+  }
+  .sub-submit .button-box{
+    margin-bottom: 22px !important;
+  }
+}

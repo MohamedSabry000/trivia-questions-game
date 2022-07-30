@@ -63,7 +63,7 @@ export default function Home() {
               ))}
             </Grid>
           </div>
-          <div className="buttons-container">
+          <div className="buttons-container sub-submit">
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Box className="button-box">
