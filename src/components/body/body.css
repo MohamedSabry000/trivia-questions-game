@@ -65,6 +65,10 @@
     margin: 22px;
 } */
 
+#main-body .container-default {
+    padding-bottom: 40px;
+}
+
 .w100 {
     width: 100%;
 }

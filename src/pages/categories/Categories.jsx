@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Grid, Box, Button } from "@mui/material";
 import { getCategories, getQuestions } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +15,11 @@ export default function Categories() {
   const [category, setCategory] = useState("");
 
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // get Finished Categories, so if selected category is finished, it will force to choose another category
   const { finishedCategories, level } = useSelector((state) => state.game);
+
+  const numberOfQuestions = useRef(10);
 
   const dispatch = useDispatch();
 
@@ -27,23 +30,34 @@ export default function Categories() {
       dispatch(setCategories(res.data?.trivia_categories));
       setCategories(res.data?.trivia_categories);
     });
+    numberOfQuestions.current = level === "easy" ? 10 : level === "medium" ? 15 : 20;
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (category === "") {
+      setErrorMessage("Please select a category");
       setShowError(true);
     } else {
       // After Choose Category, get its Questions from API
       dispatch(setSelectedCategory(category));
       getQuestions({
-        amount: 10,
+        amount: numberOfQuestions.current,
         category: category,
         difficulty: level,
       }).then((res) => {
-        dispatch(setQuestions(res.data?.results));
+        if(res.data?.results && res.data?.results.length > 0) {
+          dispatch(setQuestions(res.data?.results));
+          dispatch(setPage("questions"));
+        } else {
+          setErrorMessage("No questions found for this category");
+          setShowError(true);
+        }
+      }).catch((err) => {
+        console.log(err);
+        setErrorMessage("Something went wrong, please try again");
+        setShowError(true);
       });
-      dispatch(setPage("questions"));
     }
   };
 
@@ -90,7 +104,7 @@ export default function Categories() {
             <Grid item xs={12} className="button-box-container">
               <Box className="error">
                 <span className="error-text">
-                  {showError ? "Please fill all fields" : ""}
+                  {showError ? errorMessage : ""}
                 </span>
               </Box>
             </Grid>

@@ -52,3 +52,10 @@
   border: 1px solid #FFF;
   margin: 22px;
 }
+
+#home .buttons-container.show {
+  width: 100%;
+  text-align: center;
+  color: wheat;
+  padding: 25px;
+}
