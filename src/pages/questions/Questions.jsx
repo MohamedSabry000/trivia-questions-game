@@ -57,6 +57,12 @@ export default function Questions() {
     setShowError(false);
   }, [selectedQuestion]);
 
+  const decodeEntity = (inputStr) => {
+    var textarea = document.createElement("textarea");
+    textarea.innerHTML = inputStr;
+    // console.log(textarea.value);
+    return textarea.value;
+}
   const handleSubmit = (e) => {
     if (questionIndex < questions.length - 1 && answer) {
       // Handle The Correct Answer, Incorrect Answer and Skipped Answer
@@ -106,7 +112,10 @@ export default function Questions() {
                 <Grid item xs={12}>
                   <Box className="question-box">
                     <div className="question-text">
-                      {selectedQuestion?.question}
+                      {
+                        selectedQuestion?.question && decodeEntity(selectedQuestion.question)
+                      }
+                      {/* {selectedQuestion?.question} */}
                     </div>
                   </Box>
                 </Grid>
